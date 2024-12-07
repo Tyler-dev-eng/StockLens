@@ -18,6 +18,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", "\"DZVNH4PZ1YOCIQC1\"")
+        buildConfigField("String", "BASE_URL", "https://alphavantage.co")
     }
 
     buildTypes {
