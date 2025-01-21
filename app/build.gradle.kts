@@ -19,8 +19,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", "\"DZVNH4PZ1YOCIQC1\"")
-        buildConfigField("String", "BASE_URL", "https://alphavantage.co")
+        buildConfigField("String", "API_KEY", "\"2B9JOFXK4STJKPSK\"")
+        buildConfigField("String", "BASE_URL", "\"https://alphavantage.co\"")
     }
 
     buildTypes {
@@ -40,6 +40,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
