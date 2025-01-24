@@ -37,6 +37,8 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ty.bre.stocklens.R
 import kotlin.math.roundToInt
 import androidx.compose.material3.MaterialTheme
+import ty.bre.stocklens.ui.theme.DarkColorScheme
+import ty.bre.stocklens.ui.theme.LightColorScheme
 
 @Composable
 fun CompanyListingsScreen(
@@ -55,9 +57,9 @@ fun CompanyListingsScreen(
 
     // Theme toggle handler
     val colors = if (isDarkTheme) {
-        darkColorScheme()
+        DarkColorScheme
     } else {
-        lightColorScheme()
+        LightColorScheme
     }
 
     MaterialTheme(colorScheme = colors) {
