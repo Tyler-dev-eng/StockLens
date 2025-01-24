@@ -50,15 +50,21 @@ fun CompanyItem(
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = company.exchange,
-                    fontWeight = FontWeight.Light,
-                    color = MaterialTheme.colorScheme.onBackground
+                    style = TextStyle(
+                        fontFamily = roboto,
+                        fontWeight = FontWeight.Light,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "(${company.symbol})",
-                fontStyle = FontStyle.Italic,
-                color = MaterialTheme.colorScheme.onBackground
+                style = TextStyle(
+                    fontFamily = roboto,
+                    fontStyle = FontStyle.Italic,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             )
         }
     }
