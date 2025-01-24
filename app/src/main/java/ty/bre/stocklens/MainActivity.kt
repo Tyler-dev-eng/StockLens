@@ -11,37 +11,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ty.bre.stocklens.ui.theme.StockLensTheme
+import ty.bre.stocklens.util.Screen
+import ty.bre.stocklens.util.SetupNavGraph
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             StockLensTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                val navController = rememberNavController()
+                SetupNavGraph(
+                    navController = navController,
+                    startDestination = Screen.CompanyListingsScreen
+                )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    StockLensTheme {
-        Greeting("Android")
     }
 }

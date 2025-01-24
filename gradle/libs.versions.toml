@@ -16,9 +16,17 @@ retrofit = "2.11.0"
 roomRuntime = "2.6.1"
 hiltVersion = "2.51.1"
 hiltNavigationCompose = "1.2.0"
+kotlinxSerializationJson = "1.6.3"
+navigationCompose = "2.8.0"
 kapt-version = "1.9.22"
+kotlinxCoroutinesAndroid = "1.8.1"
+kotlinxCoroutinesCore = "1.8.1"
 
 [libraries]
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
@@ -50,3 +58,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 dagger-hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kapt-version"}
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

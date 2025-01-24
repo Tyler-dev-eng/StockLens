@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.dagger.hilt.plugin)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -47,43 +48,57 @@ android {
 
 dependencies {
 
+    // Core Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Compose and UI
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation ("com.google.accompanist:accompanist-swiperefresh:0.24.2-alpha")
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // Retrofit and Networking
+    implementation(libs.retrofit)
+    implementation(libs.converter.moshi)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
+    // CSV Handling
+    implementation(libs.opencsv)
+
+    // Room Database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt("androidx.room:room-compiler:2.6.1") // Room Compiler
+
+    // Dependency Injection (Dagger-Hilt)
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    // Debugging
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    // OpenCSV
-    implementation (libs.opencsv)
-
-    // Retrofit
-    implementation (libs.retrofit)
-    implementation (libs.converter.moshi)
-    implementation (libs.okhttp)
-    implementation (libs.logging.interceptor)
-
-    // Room
-    implementation (libs.androidx.room.runtime)
-    kapt ("androidx.room:room-compiler:2.6.1")
-
-    // Kotlin Extensions and Coroutines support for Room
-    implementation (libs.androidx.room.ktx)
-
-    //Dagger - Hilt
-    implementation(libs.dagger.hilt)
-    kapt(libs.dagger.hilt.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
-
 }
 
 kapt {
