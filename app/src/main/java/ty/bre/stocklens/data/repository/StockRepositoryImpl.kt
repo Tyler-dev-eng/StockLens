@@ -2,7 +2,6 @@ package ty.bre.stocklens.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import okio.IOException
 import retrofit2.HttpException
 import ty.bre.stocklens.data.csv.CSVParser
 import ty.bre.stocklens.data.local.StockDatabase
@@ -15,6 +14,7 @@ import ty.bre.stocklens.domain.model.CompanyListing
 import ty.bre.stocklens.domain.model.IntradayInfoModel
 import ty.bre.stocklens.domain.repository.StockRepository
 import ty.bre.stocklens.util.Resource
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -76,28 +76,36 @@ class StockRepositoryImpl @Inject constructor(
 
     override suspend fun getIntradayInfo(symbol: String): Resource<List<IntradayInfoModel>> {
         return try {
-            val response = api.getIntradayInfo(symbol = symbol)
+            val response = api.getIntradayInfo(symbol)
             val results = intradayInfoParser.parse(response.byteStream())
             Resource.Success(results)
         } catch (e: IOException) {
             e.printStackTrace()
-            Resource.Error(message = "Couldn't load intraday info")
+            Resource.Error(
+                message = "Couldn't load intraday info"
+            )
         } catch (e: HttpException) {
             e.printStackTrace()
-            Resource.Error(message = "Couldn't load intraday info")
+            Resource.Error(
+                message = "Couldn't load intraday info"
+            )
         }
     }
 
     override suspend fun getCompanyInfo(symbol: String): Resource<CompanyInfoModel> {
         return try {
-            val result = api.getCompanyInfo(symbol = symbol)
+            val result = api.getCompanyInfo(symbol)
             Resource.Success(result.toCompanyInfo())
         } catch (e: IOException) {
             e.printStackTrace()
-            Resource.Error(message = "Couldn't load company info")
+            Resource.Error(
+                message = "Couldn't load company info"
+            )
         } catch (e: HttpException) {
             e.printStackTrace()
-            Resource.Error(message = "Couldn't load company info")
+            Resource.Error(
+                message = "Couldn't load company info"
+            )
         }
     }
 }

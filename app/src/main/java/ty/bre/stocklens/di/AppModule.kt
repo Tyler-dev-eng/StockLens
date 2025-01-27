@@ -2,6 +2,7 @@ package ty.bre.stocklens.di
 
 import android.app.Application
 import androidx.room.Room
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,12 +18,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    val moshi = Moshi.Builder().build()
+
     @Provides
     @Singleton
-    fun provideStockApi() : StockApi {
+    fun provideStockApi(): StockApi {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(StockApi::class.java)
     }

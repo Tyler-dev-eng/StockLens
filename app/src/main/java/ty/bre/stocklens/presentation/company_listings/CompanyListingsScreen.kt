@@ -42,6 +42,7 @@ import ty.bre.stocklens.ui.theme.DarkColorScheme
 import ty.bre.stocklens.ui.theme.DarkElegance
 import ty.bre.stocklens.ui.theme.ModernMinimalist
 import ty.bre.stocklens.ui.theme.SophisticatedBlue
+import ty.bre.stocklens.util.Screen
 import kotlin.math.roundToInt
 
 @Composable
@@ -51,9 +52,6 @@ fun CompanyListingsScreen(
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = viewModel.state.isRefreshing)
     val state = viewModel.state
-
-    // State for theme toggling
-    var isDarkTheme by remember { mutableStateOf(false) }
 
     // State to track the FABs position
     var fabOffsetX by remember { mutableFloatStateOf(0f) }
@@ -108,7 +106,9 @@ fun CompanyListingsScreen(
                             CompanyItem(
                                 company = company, modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable {}
+                                    .clickable {
+                                        navController.navigate(Screen.CompanyInfoScreen(symbol = company.symbol))
+                                    }
                                     .padding(16.dp)
                             )
                             if (i < state.companies.size) {

@@ -1,4 +1,5 @@
 [versions]
+accompanistSwiperefresh = "0.24.2-alpha"
 agp = "8.7.3"
 converterMoshi = "2.11.0"
 kotlin = "2.0.0"
@@ -7,8 +8,8 @@ junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.9.3"
-composeBom = "2024.11.00"
+activityCompose = "1.10.0"
+composeBom = "2025.01.00"
 loggingInterceptor = "5.0.0-alpha.3"
 okhttp = "5.0.0-alpha.14"
 opencsv = "5.5.2"
@@ -17,12 +18,14 @@ roomRuntime = "2.6.1"
 hiltVersion = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 kotlinxSerializationJson = "1.6.3"
-navigationCompose = "2.8.0"
+navigationCompose = "2.8.5"
 kapt-version = "1.9.22"
 kotlinxCoroutinesAndroid = "1.8.1"
 kotlinxCoroutinesCore = "1.8.1"
 
 [libraries]
+accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanistSwiperefresh" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }

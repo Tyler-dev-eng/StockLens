@@ -61,7 +61,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation ("com.google.accompanist:accompanist-swiperefresh:0.24.2-alpha")
+    implementation (libs.accompanist.swiperefresh)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
@@ -71,10 +71,10 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     // Retrofit and Networking
-    implementation(libs.retrofit)
-    implementation(libs.converter.moshi)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
 
     // CSV Handling
     implementation(libs.opencsv)
@@ -82,7 +82,7 @@ dependencies {
     // Room Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt("androidx.room:room-compiler:2.6.1") // Room Compiler
+    kapt(libs.androidx.room.compiler) // Room Compiler
 
     // Dependency Injection (Dagger-Hilt)
     implementation(libs.dagger.hilt)

@@ -9,6 +9,7 @@ import kotlin.math.roundToInt
 import android.graphics.Paint
 import android.graphics.Color.WHITE
 import androidx.compose.foundation.Canvas
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -25,7 +26,7 @@ import kotlin.math.round
 fun StockChart(
     infos: List<IntradayInfoModel> = emptyList(),
     modifier: Modifier = Modifier,
-    graphColour: Color = Color.Green
+    graphColour: Color = MaterialTheme.colorScheme.primary
 ) {
     val spacing = 100f
     val transparentGraphColour = remember { graphColour.copy(alpha = 0.5f) }
@@ -58,7 +59,7 @@ fun StockChart(
         }
 
         val priceStep = (upperValue - lowerValue) / 5f
-        (0..5).forEach { i ->
+        (0..4).forEach { i ->
             drawContext.canvas.nativeCanvas.apply {
                 drawText(
                     round(lowerValue + priceStep * i).toString(),
