@@ -1,6 +1,7 @@
 package ty.bre.stocklens.presentation.company_listings
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
@@ -14,18 +15,19 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
@@ -35,10 +37,12 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ty.bre.stocklens.R
-import kotlin.math.roundToInt
-import androidx.compose.material3.MaterialTheme
+import ty.bre.stocklens.ui.theme.BoldRed
 import ty.bre.stocklens.ui.theme.DarkColorScheme
-import ty.bre.stocklens.ui.theme.LightColorScheme
+import ty.bre.stocklens.ui.theme.DarkElegance
+import ty.bre.stocklens.ui.theme.ModernMinimalist
+import ty.bre.stocklens.ui.theme.SophisticatedBlue
+import kotlin.math.roundToInt
 
 @Composable
 fun CompanyListingsScreen(
@@ -55,15 +59,19 @@ fun CompanyListingsScreen(
     var fabOffsetX by remember { mutableFloatStateOf(0f) }
     var fabOffsetY by remember { mutableFloatStateOf(0f) }
 
-    // Theme toggle handler
-    val colors = if (isDarkTheme) {
-        DarkColorScheme
-    } else {
-        LightColorScheme
-    }
+    // List of available themes
+    val themes = listOf(DarkColorScheme, BoldRed, SophisticatedBlue, ModernMinimalist, DarkElegance)
+    var currentThemeIndex by remember { mutableIntStateOf(0) }
 
-    MaterialTheme(colorScheme = colors) {
-        Box(modifier = Modifier.fillMaxSize()) {
+    // Get the current theme
+    val currentTheme = themes[currentThemeIndex]
+
+    MaterialTheme(colorScheme = currentTheme) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = MaterialTheme.colorScheme.background)
+        ) {
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
@@ -81,7 +89,8 @@ fun CompanyListingsScreen(
                     leadingIcon = {
                         Image(
                             painter = painterResource(id = R.drawable.search),
-                            contentDescription = "Search"
+                            contentDescription = "Search",
+                            colorFilter = ColorFilter.tint(color = MaterialTheme.colorScheme.onBackground)
                         )
                     },
                     maxLines = 1,
@@ -112,8 +121,12 @@ fun CompanyListingsScreen(
 
             // Draggable FAB
             FloatingActionButton(
-                onClick = { isDarkTheme = !isDarkTheme },
+                onClick = {
+                    currentThemeIndex =
+                        (currentThemeIndex + 1) % themes.size // Cycle through themes
+                },
                 shape = CircleShape,
+                containerColor = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .offset { IntOffset(fabOffsetX.roundToInt(), fabOffsetY.roundToInt()) }
                     .pointerInput(Unit) {

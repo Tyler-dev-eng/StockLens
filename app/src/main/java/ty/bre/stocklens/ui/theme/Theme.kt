@@ -1,56 +1,58 @@
 package ty.bre.stocklens.ui.theme
 
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 
+//Classic Green (Growth-Oriented)
 val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Color(0xFF2ECC71),
+    background = Color(0xFF1C1C1E),
+    onPrimary = Color(0xFFFFFFFF),
+    onBackground = Color(0xFFD1D1D6)
 )
 
-val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+//Bold Red (Risk/Profit Focus)
+val BoldRed = darkColorScheme(
+    primary = Color(0xFFE74C3C),
+    background = Color(0xFF2B2B2B),
+    onPrimary = Color(0xFFFFFFFF),
+    onBackground = Color(0xFFF4F4F4)
+)
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+//Sophisticated Blue (Trust and Stability)
+val SophisticatedBlue = darkColorScheme(
+    primary = Color(0xFF3498DB),
+    background = Color(0xFF1B2430),
+    onPrimary = Color(0xFFFFFFFF),
+    onBackground = Color(0xFFBDC3C7)
+)
+
+//Modern Minimalist (Neutral)
+val ModernMinimalist = darkColorScheme(
+    primary = Color(0xFFF39C12),
+    background = Color(0xFF121212),
+    onPrimary = Color(0xFF000000),
+    onBackground = Color(0xFFE0E0E0)
+)
+
+//Dark Elegance (Premium Look)
+val DarkElegance = darkColorScheme(
+    primary = Color(0xFF8E44AD),
+    background = Color(0xFF101820),
+    onPrimary = Color(0xFFFFFFFF),
+    onBackground = Color(0xFFAAB7C4)
 )
 
 @Composable
 fun StockLensTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = DarkColorScheme,
         typography = Typography,
         content = content
     )
