@@ -26,3 +26,8 @@ This app uses a free stock market API (from https://www.alphavantage.co/)  to re
 This app was built following a tutorial by Philipp Lackner (https://www.youtube.com/watch?v=uLs2FxFSWU4&ab_channel=PhilippLackner). You can follow the tutorial to learn more about building similar apps with Android.
 
 ## Screenshots
+<div style="display: flex; justify-content: space-evenly; gap: 20px;">
+  <img src="https://github.com/Tyler-dev-eng/StockLens/blob/main/Screenshot_20250128_132112.png" width="250" height="550" />
+  <img src="https://github.com/Tyler-dev-eng/StockLens/blob/main/Screenshot_20250128_132238.png" width="250" height="550" />
+  <img src="https://github.com/Tyler-dev-eng/StockLens/blob/main/Screenshot_20250128_132305.png" width="250" height="550" />
+</div>
