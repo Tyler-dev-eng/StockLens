@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.StockLens" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.StockLens.Starting" parent="Theme.SplashScreen">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:duration">2500</item>
+        <item name="postSplashScreenTheme">@style/Theme.StockLens</item>
+    </style>
 </resources>
