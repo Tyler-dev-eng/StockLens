@@ -12,9 +12,20 @@ import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * A parser for reading and converting CSV data into a list of CompanyListing objects.
+ * This implementation uses the OpenCSV library to handle the CSV format.
+ * The class is designed as a Singleton and is injected wherever needed using Dagger/Hilt.
+ */
 @Singleton
 class IntradayInfoParser @Inject constructor() : CSVParser<IntradayInfoModel> {
 
+    /**
+     * Parses the input CSV stream and converts it into a list of [IntradayInfoModel].
+     *
+     * @param stream The input stream of the CSV file to be parsed.
+     * @return A list of [IntradayInfoModel] objects filtered and sorted by specific criteria.
+     */
     override suspend fun parse(stream: InputStream): List<IntradayInfoModel> {
         val csvReader = CSVReader(InputStreamReader(stream))
         return withContext(Dispatchers.IO) {
