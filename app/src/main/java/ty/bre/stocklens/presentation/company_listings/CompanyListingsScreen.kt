@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -37,6 +36,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ty.bre.stocklens.R
+import ty.bre.stocklens.presentation.ThemeManagerViewModel
 import ty.bre.stocklens.ui.theme.BoldRed
 import ty.bre.stocklens.ui.theme.DarkColorScheme
 import ty.bre.stocklens.ui.theme.DarkElegance
@@ -48,7 +48,8 @@ import kotlin.math.roundToInt
 @Composable
 fun CompanyListingsScreen(
     navController: NavHostController,
-    viewModel: CompanyListingsViewModel = hiltViewModel()
+    viewModel: CompanyListingsViewModel = hiltViewModel(),
+    themeManagerViewModel: ThemeManagerViewModel = hiltViewModel(),
 ) {
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = viewModel.state.isRefreshing)
     val state = viewModel.state
@@ -59,7 +60,7 @@ fun CompanyListingsScreen(
 
     // List of available themes
     val themes = listOf(DarkColorScheme, BoldRed, SophisticatedBlue, ModernMinimalist, DarkElegance)
-    var currentThemeIndex by remember { mutableIntStateOf(0) }
+    var currentThemeIndex by remember { mutableIntStateOf(themeManagerViewModel.getTheme()) }
 
     // Get the current theme
     val currentTheme = themes[currentThemeIndex]
@@ -122,8 +123,8 @@ fun CompanyListingsScreen(
             // Draggable FAB
             FloatingActionButton(
                 onClick = {
-                    currentThemeIndex =
-                        (currentThemeIndex + 1) % themes.size // Cycle through themes
+                    currentThemeIndex = (currentThemeIndex + 1) % themes.size
+                    themeManagerViewModel.saveTheme(currentThemeIndex)
                 },
                 shape = CircleShape,
                 containerColor = MaterialTheme.colorScheme.primary,

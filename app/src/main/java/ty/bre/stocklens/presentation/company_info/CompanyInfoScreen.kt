@@ -9,10 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -23,125 +28,139 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import ty.bre.stocklens.ui.theme.DarkBlue
+import ty.bre.stocklens.presentation.ThemeManagerViewModel
+import ty.bre.stocklens.ui.theme.BoldRed
+import ty.bre.stocklens.ui.theme.DarkColorScheme
+import ty.bre.stocklens.ui.theme.DarkElegance
+import ty.bre.stocklens.ui.theme.ModernMinimalist
+import ty.bre.stocklens.ui.theme.SophisticatedBlue
 import ty.bre.stocklens.ui.theme.roboto
 
 @Composable
 fun CompanyInfoScreen(
     viewModel: CompanyInfoViewModel = hiltViewModel(),
-    symbol: String
+    themeManagerViewModel: ThemeManagerViewModel = hiltViewModel(),
+    symbol: String,
 ) {
     val state = viewModel.state
+    val themes = listOf(DarkColorScheme, BoldRed, SophisticatedBlue, ModernMinimalist, DarkElegance)
+    var currentThemeIndex by remember { mutableIntStateOf(themeManagerViewModel.getTheme()) }
+    val currentTheme = themes[currentThemeIndex]
+
     if (state.error == null) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp)
-        ) {
-            state.company?.let { company ->
-                Text(
-                    text = company.name,
-                    style = TextStyle(
-                        fontFamily = roboto,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        color = MaterialTheme.colorScheme.onBackground
-                    ),
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = company.symbol,
-                    style = TextStyle(
-                        fontFamily = roboto,
-                        fontStyle = FontStyle.Italic,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onBackground
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                HorizontalDivider(modifier = Modifier.fillMaxWidth())
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "Industry: ${company.industry}",
-                    style = TextStyle(
-                        fontFamily = roboto,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onBackground
-                    ),
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "Country: ${company.country}",
-                    style = TextStyle(
-                        fontFamily = roboto,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.onBackground
-                    ),
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                HorizontalDivider(modifier = Modifier.fillMaxWidth())
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = company.description,
-                    style = TextStyle(
-                        fontFamily = roboto,
-                        fontSize = 12.sp,
-                        color = MaterialTheme.colorScheme.onBackground
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                )
-
-                if (state.stockInfos.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(16.dp))
+        MaterialTheme(colorScheme = currentTheme) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(16.dp)
+            ) {
+                state.company?.let { company ->
                     Text(
-                        text = "Market Summary",
+                        text = company.name,
                         style = TextStyle(
                             fontFamily = roboto,
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.onBackground
+                        ),
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = company.symbol,
+                        style = TextStyle(
+                            fontFamily = roboto,
+                            fontStyle = FontStyle.Italic,
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colorScheme.onBackground
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    HorizontalDivider(modifier = Modifier.fillMaxWidth())
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "Industry: ${company.industry}",
+                        style = TextStyle(
+                            fontFamily = roboto,
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colorScheme.onBackground
+                        ),
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "Country: ${company.country}",
+                        style = TextStyle(
+                            fontFamily = roboto,
+                            fontSize = 14.sp,
+                            color = MaterialTheme.colorScheme.onBackground
+                        ),
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    HorizontalDivider(modifier = Modifier.fillMaxWidth())
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = company.description,
+                        style = TextStyle(
+                            fontFamily = roboto,
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.onBackground
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    if (state.stockInfos.isNotEmpty()) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Market Summary",
+                            style = TextStyle(
+                                fontFamily = roboto,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 16.sp,
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
                         )
-                    )
-                    Spacer(modifier = Modifier.height(32.dp))
-                    StockChart(
-                        infos = state.stockInfos,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(250.dp)
-                            .align(CenterHorizontally)
-                    )
+                        Spacer(modifier = Modifier.height(32.dp))
+                        StockChart(
+                            infos = state.stockInfos,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(250.dp)
+                                .align(CenterHorizontally)
+                        )
+                    }
                 }
             }
         }
     }
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Center
-    ) {
-        if (state.isLoading) {
-            CircularProgressIndicator()
-        } else if (state.error != null) {
-            Text(text = state.error, color = MaterialTheme.colorScheme.error)
+    MaterialTheme(colorScheme = currentTheme) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Center
+        ) {
+            if (state.isLoading) {
+                CircularProgressIndicator()
+            } else if (state.error != null) {
+                Text(text = state.error, color = MaterialTheme.colorScheme.error)
+            }
         }
     }
 }

@@ -76,8 +76,10 @@ dependencies {
     // Retrofit and Networking
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
+    implementation(libs.androidx.security.crypto)
 
     // CSV Handling
     implementation(libs.opencsv)
