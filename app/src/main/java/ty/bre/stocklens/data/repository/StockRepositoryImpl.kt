@@ -18,6 +18,15 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Implementation of [StockRepository] responsible for handling data operations.
+ * Fetches data from local database or remote API, based on the provided parameters.
+ *
+ * @param api The [StockApi] for making remote API calls.
+ * @param db The local [StockDatabase] for caching data.
+ * @param parser The [CSVParser] for parsing company listings from CSV responses.
+ * @param intradayInfoParser The [CSVParser] for parsing intraday info data from CSV responses.
+ */
 @Singleton
 class StockRepositoryImpl @Inject constructor(
     private val api: StockApi,
