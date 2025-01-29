@@ -9,6 +9,7 @@ sealed class Screen {
 
     @Serializable
     data class CompanyInfoScreen(
-        val symbol: String
+        val symbol: String,
+        val companyName: String,
     ) : Screen()
 }

@@ -1,5 +1,6 @@
 package ty.bre.stocklens.data.repository
 
+import android.app.Application
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -32,7 +33,8 @@ class StockRepositoryImpl @Inject constructor(
     private val api: StockApi,
     db: StockDatabase,
     private val parser: CSVParser<CompanyListing>,
-    private val intradayInfoParser: CSVParser<IntradayInfoModel>
+    private val intradayInfoParser: CSVParser<IntradayInfoModel>,
+    private val app: Application
 ) : StockRepository {
 
     private val dao = db.dao

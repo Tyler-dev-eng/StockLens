@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -35,17 +34,26 @@ import ty.bre.stocklens.ui.theme.DarkElegance
 import ty.bre.stocklens.ui.theme.ModernMinimalist
 import ty.bre.stocklens.ui.theme.SophisticatedBlue
 import ty.bre.stocklens.ui.theme.roboto
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun CompanyInfoScreen(
     viewModel: CompanyInfoViewModel = hiltViewModel(),
     themeManagerViewModel: ThemeManagerViewModel = hiltViewModel(),
     symbol: String,
+    companyName: String,
 ) {
     val state = viewModel.state
     val themes = listOf(DarkColorScheme, BoldRed, SophisticatedBlue, ModernMinimalist, DarkElegance)
     var currentThemeIndex by remember { mutableIntStateOf(themeManagerViewModel.getTheme()) }
     val currentTheme = themes[currentThemeIndex]
+    val targetDate = when (LocalDate.now().dayOfWeek) {
+        java.time.DayOfWeek.MONDAY -> LocalDate.now().minusDays(3)  // Last Friday
+        java.time.DayOfWeek.SATURDAY -> LocalDate.now().minusDays(1)  // Last Friday
+        java.time.DayOfWeek.SUNDAY -> LocalDate.now().minusDays(2)  // Last Friday
+        else -> LocalDate.now().minusDays(1)  // Yesterday
+    }
 
     if (state.error == null) {
         MaterialTheme(colorScheme = currentTheme) {
@@ -57,7 +65,7 @@ fun CompanyInfoScreen(
             ) {
                 state.company?.let { company ->
                     Text(
-                        text = company.name,
+                        text = companyName,
                         style = TextStyle(
                             fontFamily = roboto,
                             fontWeight = FontWeight.Bold,
@@ -71,7 +79,7 @@ fun CompanyInfoScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = company.symbol,
+                        text = symbol,
                         style = TextStyle(
                             fontFamily = roboto,
                             fontStyle = FontStyle.Italic,
@@ -88,7 +96,7 @@ fun CompanyInfoScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "Industry: ${company.industry}",
+                        text = if (company.industry == "") "Industry: Data not available" else "Industry: ${company.industry}",
                         style = TextStyle(
                             fontFamily = roboto,
                             fontSize = 14.sp,
@@ -101,7 +109,7 @@ fun CompanyInfoScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = "Country: ${company.country}",
+                        text = if (company.country == "") "Country: Data not available" else "Country: ${company.country}",
                         style = TextStyle(
                             fontFamily = roboto,
                             fontSize = 14.sp,
@@ -118,7 +126,7 @@ fun CompanyInfoScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
-                        text = company.description,
+                        text = if (company.description == "") "Data not available" else company.description,
                         style = TextStyle(
                             fontFamily = roboto,
                             fontSize = 12.sp,
@@ -127,26 +135,27 @@ fun CompanyInfoScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    if (state.stockInfos.isNotEmpty()) {
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            text = "Market Summary",
-                            style = TextStyle(
-                                fontFamily = roboto,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 16.sp,
-                                color = MaterialTheme.colorScheme.onBackground
-                            )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = "Market Summary: ${targetDate.format(DateTimeFormatter.ofPattern("dd:MM:yyyy"))}",
+                        style = TextStyle(
+                            fontFamily = roboto,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onBackground
                         )
-                        Spacer(modifier = Modifier.height(32.dp))
-                        StockChart(
-                            infos = state.stockInfos,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(250.dp)
-                                .align(CenterHorizontally)
-                        )
-                    }
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    StockChart(
+                        infos = state.stockInfos,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(250.dp)
+                            .align(CenterHorizontally)
+                    )
+
                 }
             }
         }

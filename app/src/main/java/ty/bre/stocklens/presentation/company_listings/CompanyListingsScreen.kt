@@ -108,7 +108,7 @@ fun CompanyListingsScreen(
                                 company = company, modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
-                                        navController.navigate(Screen.CompanyInfoScreen(symbol = company.symbol))
+                                        navController.navigate(Screen.CompanyInfoScreen(symbol = company.symbol, companyName = company.name))
                                     }
                                     .padding(16.dp)
                             )

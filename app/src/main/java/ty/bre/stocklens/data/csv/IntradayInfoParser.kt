@@ -28,6 +28,13 @@ class IntradayInfoParser @Inject constructor() : CSVParser<IntradayInfoModel> {
      */
     override suspend fun parse(stream: InputStream): List<IntradayInfoModel> {
         val csvReader = CSVReader(InputStreamReader(stream))
+        val targetDate = when (LocalDate.now().dayOfWeek) {
+            java.time.DayOfWeek.MONDAY -> LocalDate.now().minusDays(3)  // Last Friday
+            java.time.DayOfWeek.SATURDAY -> LocalDate.now().minusDays(1)  // Last Friday
+            java.time.DayOfWeek.SUNDAY -> LocalDate.now().minusDays(2)  // Last Friday
+            else -> LocalDate.now().minusDays(1)  // Yesterday
+        }
+
         return withContext(Dispatchers.IO) {
             csvReader
                 .readAll()
@@ -39,7 +46,7 @@ class IntradayInfoParser @Inject constructor() : CSVParser<IntradayInfoModel> {
                     dto.toIntradayInfo()
                 }
                 .filter {
-                    it.date.dayOfMonth == LocalDate.now().minusDays(4).dayOfMonth
+                    it.date.toLocalDate() == targetDate
                 }
                 .sortedBy {
                     it.date.hour

@@ -23,7 +23,7 @@ fun SetupNavGraph(
 
         composable<Screen.CompanyInfoScreen> { backStackEntry ->
             val args = backStackEntry.toRoute<Screen.CompanyInfoScreen>()
-            CompanyInfoScreen(symbol = args.symbol)
+            CompanyInfoScreen(symbol = args.symbol, companyName = args.companyName)
         }
     }
 }
